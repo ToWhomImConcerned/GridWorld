@@ -1,6 +1,6 @@
 # Q-Learning Visualizer
 
-![demo](Heatmap_Animation.gif)
+![demo](Q_Heatmap.gif)
 
 An interactive reinforcement learning visualizer built from scratch in Python.
 Draw a custom maze, then watch a Q-learning agent learn to solve it in real time

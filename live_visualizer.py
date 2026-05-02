@@ -17,8 +17,8 @@ TEXT       = (220, 220, 220)
 
 CELL_SIZE  = 120
 PADDING    = 20
-GRID_SIZE  = 7 # CHANGE THIS ONE NUMBER TO RESIZE EVERYTHING
-SLIDER_MIN = 1
+GRID_SIZE  = 5 # CHANGE THIS ONE NUMBER TO RESIZE EVERYTHING
+SLIDER_MIN = 20
 SLIDER_MAX = 300
 
 WIDTH  = GRID_SIZE * CELL_SIZE + PADDING * 2
@@ -100,11 +100,11 @@ def draw(screen, env, episode, steps, total_reward, font, small_font, epsilon, s
         f"Episode: {episode}  Steps: {steps}  reward: {total_reward}  Eps: {epsilon:.3f}",
         True, TEXT
     )
-    screen.blit(hud, (PADDING, HEIGHT - 80))
-    pygame.display.flip()
+    screen.blit(hud, (WIDTH // 2 - hud.get_width() // 2, HEIGHT - 80))
 
-    speed_label = font.render(f"speed: {speed} fps  (UP/DOWN to change)", True, TEXT)
-    screen.blit(speed_label, (PADDING, HEIGHT - 35))
+    speed_label = font.render(f"Speed: {speed} fps  (W: faster  S: slower)", True, TEXT)
+    screen.blit(speed_label, (WIDTH // 2 - speed_label.get_width() // 2, HEIGHT - 50))
+    pygame.display.flip()
 
 def main():
     global epsilon
@@ -189,11 +189,8 @@ def main():
                                         y + (CELL_SIZE - lh) // 2))
                     
         # instructions
-        line1 = small_font.render("Left click: wall  |  Right click: goal  |  Space: start", True, TEXT)
-        line2 = small_font.render("W: speed up  |  S: speed down", True, TEXT)
-        
-        screen.blit(line1, (WIDTH // 2 - line1.get_width() // 2, HEIGHT - 65))
-        screen.blit(line2, (WIDTH // 2 - line2.get_width() // 2, HEIGHT - 40))
+        instruct = font.render("Left click: wall  |  Right click: goal  |  Space: start", True, TEXT)
+        screen.blit(instruct, (WIDTH // 2 - instruct.get_width() // 2, HEIGHT - 75))
 
         pygame.display.flip()
         clock.tick(30)
@@ -214,9 +211,9 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
-                        train_speed = min(SLIDER_MAX, train_speed + 10)
+                        train_speed = min(SLIDER_MAX, train_speed + 20)
                     if event.key == pygame.K_s:
-                        train_speed = max(SLIDER_MIN, train_speed - 10)
+                        train_speed = max(SLIDER_MIN, train_speed - 20)
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
